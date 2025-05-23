@@ -1,12 +1,12 @@
-
 interface CloudinaryResponse {
   secure_url: string;
   resource_type: string;
   error?: string;
 }
 
+// Update these values to match your Cloudinary account credentials
 const CLOUDINARY_CLOUD_NAME = 'dvmrhs2ek';
-const CLOUDINARY_UPLOAD_PRESET = 'rebuild';
+const CLOUDINARY_UPLOAD_PRESET = 'DatabaseUpload';
 
 export const uploadToCloudinary = async (file: File): Promise<CloudinaryResponse> => {
   try {

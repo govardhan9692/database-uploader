@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Collection } from '../../services/firebase';
@@ -84,7 +83,7 @@ const CollectionFilter: React.FC<CollectionFilterProps> = ({
             
             {showDropZone && (
               <span className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 flex items-center justify-center rounded pointer-events-none">
-             
+                Drop to add
               </span>
             )}
             

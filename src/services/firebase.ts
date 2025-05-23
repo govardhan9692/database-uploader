@@ -1,4 +1,3 @@
-
 import { initializeApp } from 'firebase/app';
 import { 
   getAuth, 
@@ -25,13 +24,13 @@ import {
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDorQDLPgCDWEodNUk9QRhcbfGpUL3vdaA",
-  authDomain: "rebuild-fit.firebaseapp.com",
-  projectId: "rebuild-fit",
-  storageBucket: "rebuild-fit.firebasestorage.app",
-  messagingSenderId: "784467283936",
-  appId: "1:784467283936:web:b64c9b007d93b862606585",
-  measurementId: "G-FQ1CBG9P3W"
+  apiKey: "AIzaSyA5d9A3JA23O6r7VXu6oRk-_xGHYPElh-s",
+  authDomain: "databaseupload-2195a.firebaseapp.com",
+  projectId: "databaseupload-2195a",
+  storageBucket: "databaseupload-2195a.firebasestorage.app",
+  messagingSenderId: "1010080505707",
+  appId: "1:1010080505707:web:64105decb233bd888f362e",
+  measurementId: "G-CX190YM3CJ"
 };
 
 // Initialize Firebase

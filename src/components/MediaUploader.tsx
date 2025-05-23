@@ -1,6 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { saveMediaToFirestore, getUserCollections, Collection } from '../services/firebase';
+import { uploadToCloudinary } from '../services/cloudinary';
 import { useToast } from '@/hooks/use-toast';
 import { Upload, Folder, ImageIcon, VideoIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -44,32 +44,6 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({ userId, onUploadSuccess }
     }
   };
   
-  const uploadToCloudinary = async (file: File, folder = 'media_archive'): Promise<string> => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'ml_default');
-    formData.append('folder', folder);
-    
-    const cloudinaryUrl = `https://api.cloudinary.com/v1_1/dzc5qwm6p/${file.type.startsWith('video') ? 'video' : 'image'}/upload`;
-    
-    try {
-      const response = await fetch(cloudinaryUrl, {
-        method: 'POST',
-        body: formData,
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to upload to Cloudinary');
-      }
-      
-      const data = await response.json();
-      return data.secure_url;
-    } catch (error) {
-      console.error('Error uploading to Cloudinary:', error);
-      throw error;
-    }
-  };
-  
   const handleUpload = async () => {
     if (!files || files.length === 0) {
       toast({
@@ -100,11 +74,17 @@ const MediaUploader: React.FC<MediaUploaderProps> = ({ userId, onUploadSuccess }
         }
         
         try {
-          // Upload to Cloudinary
-          const mediaUrl = await uploadToCloudinary(file);
+          // Upload to Cloudinary using the shared service
+          const uploadResult = await uploadToCloudinary(file);
+          
+          if (uploadResult.error) {
+            uploadedCount.failure++;
+            console.error('Error uploading to Cloudinary:', uploadResult.error);
+            continue;
+          }
           
           // Save reference to Firestore
-          const result = await saveMediaToFirestore(userId, mediaUrl, resourceType, selectedCollectionId);
+          const result = await saveMediaToFirestore(userId, uploadResult.secure_url, resourceType, selectedCollectionId);
           
           if (result.error) {
             uploadedCount.failure++;
